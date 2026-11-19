@@ -12,6 +12,7 @@ public class player_controller : MonoBehaviour
     CharacterController cc;
     public float gravedad = -9.81f;
     public float velocidadVertical = 0f;
+    float moneda;
 
     void Start()
     {
@@ -35,19 +36,20 @@ public class player_controller : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalMove, velocidadVertical, verticalMove);
         cc.Move(direction * velocidad * Time.deltaTime);
-         
+    }
 
-      
-
-      
-
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("coin"))
+        {
+            //sumar 1 a la moneda
+            moneda += 1;
+            //mostrar en consola texto de cuantas monedas tienes
+            Debug.Log("moneda" + moneda);
+            //destruir moneda
+            Destroy(hit.gameObject);
+        }
         
-
-
-
-
-
-
-
+        Debug.Log("Collided with: " + hit.gameObject.name);
     }
 }
