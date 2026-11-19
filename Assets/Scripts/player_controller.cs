@@ -32,7 +32,7 @@ public class player_controller : MonoBehaviour
             }
         }
         velocidadVertical += gravedad * Time.deltaTime;
-        
+
 
         Vector3 direction = new Vector3(horizontalMove, velocidadVertical, verticalMove);
         cc.Move(direction * velocidad * Time.deltaTime);
@@ -42,14 +42,20 @@ public class player_controller : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("coin"))
         {
-            //sumar 1 a la moneda
-            moneda += 1;
-            //mostrar en consola texto de cuantas monedas tienes
-            Debug.Log("moneda" + moneda);
-            //destruir moneda
-            Destroy(hit.gameObject);
+
+            collectable_controller collectable = hit.gameObject.GetComponent<collectable_controller>();
+            if (collectable.collectable == false)
+            {
+                collectable.collectable = true;
+                //sumar 1 a la moneda
+                moneda += 1;
+                //mostrar en consola texto de cuantas monedas tienes
+                Debug.Log("moneda" + moneda);
+                //destruir moneda
+                Destroy(hit.gameObject);
+            }
         }
-        
+
         Debug.Log("Collided with: " + hit.gameObject.name);
     }
 }
